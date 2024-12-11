@@ -5,20 +5,19 @@ defmodule Abacatepay.Types.Customer do
 
   @type metadata :: %{
     name: String.t(),
-    cellphone: String.t(),
     taxId: String.t(),
-    email: String.t()
+    email: String.t(),
+    cellphone: String.t()
   }
 
   @type id :: %{
-    metadata: metadata(),
     id: String.t(),
-    publicId: String.t(),
-    storeId: String.t(),
     devMode: boolean,
-    createdAt: DateTime.t(),
+    storeId: String.t(),
+    publicId: String.t(),
+    metadata: metadata(),
     updatedAt: DateTime.t(),
-    version: integer
+    createdAt: DateTime.t()
   }
 
   @type t :: %{
@@ -27,8 +26,8 @@ defmodule Abacatepay.Types.Customer do
   }
 
   @type response ::
-    {:ok, t()} |
-    {:error, String.t()}
+    { :ok, t() } |
+    { :error, String.t() }
 
   defstruct [:id, :metadata]
 end 

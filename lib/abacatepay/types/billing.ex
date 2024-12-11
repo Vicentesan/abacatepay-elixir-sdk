@@ -1,46 +1,50 @@
 defmodule Abacatepay.Types.Billing do
   alias Abacatepay.Types.Product
   alias Abacatepay.Types.Customer
-  @type status :: :pending | :expired | :cancelled | :paid | :refunded
-  @type method :: :pix
-  @type kind :: :one_time
-  
+
+  @type status :: :PENDING | :EXPIRED | :CANCELLED | :PAID | :REFUNDED
+  @type method :: :PIX
+  @type kind :: :ONE_TIME
+
   @type t :: %{
-    metadata: metadata(),
     id: String.t(),
-    public_id: String.t(),
-    products: list(Product.t()),
-    amount: integer,
-    status: status(),
-    dev_mode: boolean,
-    methods: list(method()),
-    frequency: kind(),
-    created_at: DateTime.t(),
-    updated_at: DateTime.t(),
     url: String.t(),
-    customer_id: Customer.id() | nil,
-    customer: Customer.t() | nil
+    amount: integer,
+    devMode: boolean,
+    status: status(),
+    frequency: kind(),
+    metadata: metadata(),
+    publicId: String.t(),
+    createdAt: DateTime.t(),
+    updatedAt: DateTime.t(),
+    methods: list(method()),
+    products: list(Product.t()),
+    customer: Customer.t() | nil,
+    customerId: Customer.id() | nil
   }
 
   @type metadata :: %{
     fee: integer,
-    return_url: String.t(),
-    completion_url: String.t()
+    returnUrl: String.t(),
+    completionUrl: String.t()
   }
 
   @type create_data :: %{
     frequency: kind(),
+    metadata: metadata(),
+    returnUrl: String.t(),
     methods: list(method()),
-    products: list(Product.create_data()),
-    return_url: String.t(),
-    completion_url: String.t()
+    completionUrl: String.t(),
+    customer: Customer.t() | nil,
+    customerId: Customer.id() | nil,
+    products: list(Product.create_data())
   }
 
   @type response ::
-    {:ok, t()} |
-    {:error, String.t()}
+    { :ok, t() } |
+    { :error, String.t() }
 
   @type list_response ::
-    {:ok, list(t())} |
-    {:error, String.t()}
-end 
+    { :ok, list(t()) } |
+    { :error, String.t() }
+end

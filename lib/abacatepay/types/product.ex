@@ -1,14 +1,14 @@
 defmodule Abacatepay.Types.Product do
   @type t :: %{
-    productId: String.t(),
-    quantity: integer
+    quantity: integer,
+    productId: String.t()
   }
 
   @type create_data :: %{
-    externalId: String.t(),
+    price: float,
     name: String.t(),
     quantity: integer,
-    price: float,
+    externalId: String.t(),
     description: String.t() | nil
   }
 end 

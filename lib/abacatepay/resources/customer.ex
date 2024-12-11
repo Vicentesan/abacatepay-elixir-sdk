@@ -40,11 +40,11 @@ defmodule Abacatepay.Customer do
   @doc """
   List Customers
   """
-  @spec list(Client.t()) :: [Customer.t()]
+  @spec list(Client.t()) :: Customer.list_response()
   def list(client) do
     case Client.get(client, "/customer/list") do
-      { :ok, %{ status_code: 200, body: body } } ->
-        { :ok, Enum.map(body["customers"], &struct(Customer, &1)) }
+      { :ok, %{ status_code: 200, body: %{"data" => data} } } ->
+        { :ok, Enum.map(data, &struct(Customer, &1)) }
 
       { :ok, %{ status_code: _, body: %{"error" => error} } } ->
         { :error, error }

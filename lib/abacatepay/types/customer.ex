@@ -29,5 +29,9 @@ defmodule Abacatepay.Types.Customer do
     { :ok, t() } |
     { :error, String.t() }
 
+  @type list_response ::
+    { :ok, list(t()) } |
+    { :error, String.t() }
+
   defstruct [:id, :metadata]
 end 

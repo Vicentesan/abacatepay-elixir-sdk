@@ -19,6 +19,8 @@ defmodule Abacatepay.MixProject do
 
   defp deps do
     [
+      {:jason, "~> 1.4"},
+      {:httpoison, "~> 2.0"},
       {:ex_doc, "~> 0.29", only: :dev, runtime: false}
     ]
   end

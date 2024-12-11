@@ -1,4 +1,4 @@
-defmodule Abacatepay.Client do
+defmodule Abacatepay.Types.Client do
   @moduledoc """
   HTTP client for making requests to the Abacatepay API.
   """
@@ -9,10 +9,14 @@ defmodule Abacatepay.Client do
 
   defstruct [:api_key]
 
+  @type t :: %__MODULE__{api_key: String.t()}
+
+  @spec new(String.t()) :: t()
   def new(api_key) do
     %__MODULE__{api_key: api_key}
   end
 
+  @spec process_url(String.t()) :: String.t()
   def process_url(url) do
     @base_url <> url
   end

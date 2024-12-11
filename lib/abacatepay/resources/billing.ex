@@ -25,7 +25,7 @@ defmodule Abacatepay.Billing do
       { :ok, billing } = Abacatepay.Billing.create(client, billing_data)
   """
 
-  alias Abacatepay.Client
+  alias Abacatepay.Types.Client
   alias Abacatepay.Types.Billing
 
   @doc """

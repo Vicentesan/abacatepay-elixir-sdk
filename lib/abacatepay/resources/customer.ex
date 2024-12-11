@@ -1,4 +1,4 @@
-defmodule Abacatepay.Customer do
+defmodule AbacatePay.Resources.Customer do
   @moduledoc """
   Handles customer-related operations with the Abacatepay API.
 
@@ -17,7 +17,7 @@ defmodule Abacatepay.Customer do
       { :ok, customer } = Abacatepay.Customer.create(client, customer_data)
   """
 
-  alias Abacatepay.Client
+  alias Abacatepay.Types.Client
   alias Abacatepay.Types.Customer
 
   @doc """

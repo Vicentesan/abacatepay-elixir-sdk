@@ -52,7 +52,7 @@ defmodule Abacatepay.Billing do
   def list(client) do
     case Client.get(client, "/billing/list") do
       { :ok, %{ status_code: 200, body: body } } ->
-        { :ok, struct(Billing, body) }
+        { :ok, Enum.map(body["billings"], &struct(Billing, &1)) }
 
       { :ok, %{ status_code: _, body: %{"error" => error} } } ->
         { :error, error }

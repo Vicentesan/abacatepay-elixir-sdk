@@ -4,7 +4,7 @@ defmodule Abacatepay.MixProject do
   def project do
     [
       app: :abacatepay,
-      version: "0.1.0",
+      version: "0.0.0",
       elixir: "~> 1.14",
       start_permanent: Mix.env() == :prod,
       deps: deps()
@@ -18,6 +18,8 @@ defmodule Abacatepay.MixProject do
   end
 
   defp deps do
-    []
+    [
+      {:ex_doc, "~> 0.29", only: :dev, runtime: false}
+    ]
   end
 end 

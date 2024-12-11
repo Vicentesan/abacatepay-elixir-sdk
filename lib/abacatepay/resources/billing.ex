@@ -1,4 +1,30 @@
 defmodule Abacatepay.Billing do
+  @moduledoc """
+  Handles billing-related operations with the Abacatepay API.
+
+  ## Examples
+
+      client = Abacatepay.Client.new("your_api_key")
+      
+      # Create a billing
+      billing_data = %{
+        frequency: :ONE_TIME,
+        methods: [:PIX],
+        products: [
+          %{
+            externalId: "prod_123",
+            name: "Product 1",
+            quantity: 1,
+            price: 100.0
+          }
+        ],
+        returnUrl: "https://your-site.com/return",
+        completionUrl: "https://your-site.com/complete"
+      }
+
+      { :ok, billing } = Abacatepay.Billing.create(client, billing_data)
+  """
+
   alias Abacatepay.Client
   alias Abacatepay.Types.Billing
 
@@ -20,7 +46,7 @@ defmodule Abacatepay.Billing do
   end
 
   @doc """
-  Get a billings
+  List Billings
   """
   @spec list(Client.t()) :: Billing.list_response()
   def list(client) do

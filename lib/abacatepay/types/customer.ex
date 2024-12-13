@@ -20,9 +20,9 @@ defmodule Abacatepay.Types.Customer do
     createdAt: DateTime.t()
   }
 
-  @type t :: %{
+  @type t :: %__MODULE__{
     id: String.t(),
-    metadata: metadata()
+    metadata: map()
   }
 
   @type response ::

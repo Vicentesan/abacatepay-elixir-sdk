@@ -31,12 +31,26 @@ defmodule Abacatepay.Types.Client do
     ]
   end
 
-  def process_response_body(body) do
-    Jason.decode!(body)
+  def post(%__MODULE__{} = client, url, body, headers \\ [], options \\ []) do
+    request(client, :post, url, body, headers, options)
+    |> handle_response()
   end
 
-  def request(client, method, url, body \\ "", headers \\ [], options \\ []) do
-    headers = process_request_headers(client, headers)
-    super(method, url, body, headers, options)
+  def get(%__MODULE__{} = client, url, headers \\ [], options \\ []) do
+    request(client, :get, url, "", headers, options)
+    |> handle_response()
   end
+
+  defp request(%__MODULE__{} = client, method, url, body, headers, options) do
+    headers = process_request_headers(client, headers)
+    url = process_url(url)
+    HTTPoison.request(method, url, body, headers, options)
+  end
+
+  defp handle_response({:ok, %{body: body} = response}) do
+    decoded_body = Jason.decode!(body)
+    {:ok, %{response | body: decoded_body}}
+  end
+  
+  defp handle_response(error), do: error
 end

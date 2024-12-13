@@ -6,7 +6,7 @@ defmodule Abacatepay.Types.Billing do
   @type method :: :PIX
   @type kind :: :ONE_TIME
 
-  @type t :: %{
+  @type t :: %__MODULE__{
     id: String.t(),
     url: String.t(),
     amount: integer,
@@ -47,4 +47,21 @@ defmodule Abacatepay.Types.Billing do
   @type list_response ::
     { :ok, list(t()) } |
     { :error, String.t() }
+
+  defstruct [
+    :id,
+    :url,
+    :amount,
+    :devMode,
+    :status,
+    :frequency,
+    :metadata,
+    :publicId,
+    :createdAt,
+    :updatedAt,
+    :methods,
+    :products,
+    :customer,
+    :customerId
+  ]
 end

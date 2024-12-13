@@ -19,6 +19,7 @@ defmodule AbacatePay.Resources.Customer do
 
   alias Abacatepay.Types.Client
   alias Abacatepay.Types.Customer
+  require Logger
 
   @doc """
   Create a new customer
@@ -26,14 +27,28 @@ defmodule AbacatePay.Resources.Customer do
   @spec create(Client.t(), Customer.metadata()) :: Customer.response()
   def create(client, params) do
     case Client.post(client, "/customer/create", Jason.encode!(params)) do
-      { :ok, %{ status_code: 200, body: body } } ->
-        { :ok, struct(Customer, body) }
+      {:ok, response} ->
+        Logger.info("Response received: #{inspect(response, pretty: true)}")
+        
+        case response do
+          %{status_code: 200, body: %{"data" => data}} ->
+            customer = %Customer{
+              id: data["id"],
+              metadata: data["metadata"]
+            }
+            {:ok, customer}
+          
+          %{body: %{"error" => error}} ->
+            {:error, error}
+          
+          _ ->
+            Logger.error("Unexpected response format: #{inspect(response, pretty: true)}")
+            {:error, "Unexpected response format"}
+        end
 
-      { :ok, %{ status_code: _, body: %{"error" => error} } } ->
-        { :error, error }
-
-      { :error, error } ->
-        { :error, error.reason }
+      {:error, error} ->
+        Logger.error("Request error: #{inspect(error, pretty: true)}")
+        {:error, error.reason}
     end
   end
 
@@ -43,14 +58,26 @@ defmodule AbacatePay.Resources.Customer do
   @spec list(Client.t()) :: Customer.list_response()
   def list(client) do
     case Client.get(client, "/customer/list") do
-      { :ok, %{ status_code: 200, body: %{"data" => data} } } ->
-        { :ok, Enum.map(data, &struct(Customer, &1)) }
+      {:ok, response} ->
+        case response do
+          %{status_code: 200, body: %{"data" => data}} ->
+            customers = Enum.map(data, fn customer_data ->
+              %Customer{
+                id: customer_data["id"],
+                metadata: customer_data["metadata"]
+              }
+            end)
+            {:ok, customers}
+          
+          %{body: %{"error" => error}} ->
+            {:error, error}
+          
+          _ ->
+            {:error, "Unexpected response format"}
+        end
 
-      { :ok, %{ status_code: _, body: %{"error" => error} } } ->
-        { :error, error }
-
-      { :error, error } ->
-        { :error, error.reason }
+      {:error, error} ->
+        {:error, error.reason}
     end
   end
 end

@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Adds detailed documentation for each supported resource (Customer and Billing)
+- Improve response handling and struct mapping
 - Customer resource with create and list operations
 - Billing resource with create and list operations
 - Basic HTTP client with authentication
